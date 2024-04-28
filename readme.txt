@@ -8,6 +8,7 @@ This folder is created for
      - manage_dirs.py
      - run_GLM_for_parallel.py
      - tasks.py
+     - functions.py
      - X.csv (Parameter values sampled by Salib sampling)
      - GLM_AND_DATA_ORIGINAL_ubuntu.rar '''
 
