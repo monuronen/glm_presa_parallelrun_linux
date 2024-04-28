@@ -168,20 +168,41 @@ def run_GLM_for_parallel(params, X_id, df_sim_csv_folder_url, container, nml_fil
 
     #####################################################################################################
     # (6) Now extract user-selected variable timeseries at a given height ###############################
-    query_height = 14.6 - 6.41 # height from the lake bottom (6.41 mAOD) in meters
+    # height from the lake bottom (6.41 mAOD) in meters (this should be list!!!)
+    query_heights = [14.6 - 6.41, 16 - 6.41, 10000]
+    N_qh = len(query_heights)
 
     # Now we will query temperature values at the specified height with 2 options
     ########### OPTION 1: with standard interpolation ###########################
     # Preallocate an array filled with NaN values with specified shape
-    shape = (Nt,)  # Shape of the array
+    shape = (Nt,N_qh)  # Shape of the array
     temp_at_query_height = np.full(shape, np.nan)
-    # Query temperature at specified height for every timestep
-    for t in range(Nt):
-        temp_at_query_height[t] = np.interp(query_height, gz, temp_grid[:,t])
+    # Preallocate the simulation results dataframe
+    df_sim = pd.DataFrame({'StDate': DateIndex1, 'EndDate': DateIndex2})
+    for j in range(N_qh):
+        # Define a column title that includes variable name and query height
+        if query_heights[j] > np.max(z_LakeSurf):
+            column_title = "temp_SURFACE"
+            temp_LakeSurf = [temp[NS[i]-1, i] for i in range(NS.shape[0])]
+            temp_LakeSurf = np.array(temp_LakeSurf)
+            df_sim[column_title] = temp_LakeSurf
+        else:
+            column_title = f"temp_{str(query_heights[j])}"
+            # Query temperature at specified height for every timestep
+            for t in range(Nt):
+                # If the query height is larger than all water heights from the lake bottom
+                # throughout the whole simulation period, this means the user queried
+                # the temperature of the surface.
+                # Let's take surface temp query height as 10 cm below the water surface level
+                #if query_heights[j] > np.max(z_LakeSurf):
+                #    query_heights[j] = z_LakeSurf[t] - 0.1
+                temp_at_query_height[t,j] = np.interp(query_heights[j], gz, temp_grid[:,t])
 
-    # Now store queried temp into a dataframe for simulated variables
-    #df_sim = pd.DataFrame({'DateTime': dt1, 'Data': temp_at_query_height})
-    df_sim = pd.DataFrame({'StDate': DateIndex1, 'EndDate': DateIndex2, 'Simulated': temp_at_query_height})
+            # Now store queried temp into a dataframe for simulated variables
+            # df_sim = pd.DataFrame({'DateTime': dt1, 'Data': temp_at_query_height})
+            # df_sim = pd.DataFrame({'StDate': DateIndex1, 'EndDate': DateIndex2, 'Simulated': temp_at_query_height})
+            df_sim[column_title] = temp_at_query_height[:,j]
+    
 
     str_X_id = integer_to_five_digit_string(X_id)
 
