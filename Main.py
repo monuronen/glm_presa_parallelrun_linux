@@ -19,7 +19,7 @@ from datetime import datetime, timedelta, date
      - X.csv (Parameter values sampled by Salib sampling)
      - GLM_AND_DATA_ORIGINAL_ubuntu.rar '''
 
-MAIN_FOLDER = '/home/monen/PreSA_parallel_process/'
+MAIN_FOLDER = '/home/monen/glm_presa_parallelrun_linux/'
 N_processes = 4
 
 Process_Folder_Names = [f'{MAIN_FOLDER}Process_{i:03}/' for i in range(N_processes)]
