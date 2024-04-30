@@ -169,7 +169,7 @@ def run_GLM_for_parallel(params, X_id, df_sim_csv_folder_url, container, nml_fil
     #####################################################################################################
     # (6) Now extract user-selected variable timeseries at a given height ###############################
     # height from the lake bottom (6.41 mAOD) in meters (this should be list!!!)
-    query_heights = [14.6 - 6.41, 16 - 6.41, 10000]
+    query_heights = [8.12 - 6.41, 11.35 - 6.41, 14.6 - 6.41, 18.6 - 6.41, 10000]
     N_qh = len(query_heights)
 
     # Now we will query temperature values at the specified height with 2 options

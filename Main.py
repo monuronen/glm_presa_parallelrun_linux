@@ -19,7 +19,7 @@ from datetime import datetime, timedelta, date
      - X.csv (Parameter values sampled by Salib sampling)
      - GLM_AND_DATA_ORIGINAL_ubuntu.rar '''
 
-MAIN_FOLDER = '/home/monen/glm_presa_parallelrun_linux/'
+MAIN_FOLDER = '/home/monen/repositories/glm_presa_parallelrun_linux/'
 N_processes = 4
 
 Process_Folder_Names = [f'{MAIN_FOLDER}Process_{i:03}/' for i in range(N_processes)]
@@ -70,14 +70,14 @@ import sys
 # INPUTS-------------------------------------------------------------------------------------------------------
 # what are the group titles of the decision variables in glm3.nml file (must be a list and order is important!)
 #params_section = ['mixing','mixing','mixing','mixing','mixing','mixing','meteorology','meteorology','meteorology','meteorology','light','inflow','inflow','inflow','inflow','inflow','inflow','inflow','inflow','inflow','inflow']
-params_section = ['mixing','mixing','mixing','mixing','mixing','mixing']
+params_section = ['mixing','mixing','mixing','mixing','mixing','mixing','light','meteorology','meteorology','meteorology']
 # what are the names of the decision variables in glm3.nml file (must be a list and order is important!)
 #params_name = ['coef_mix_KH','coef_mix_hyp','coef_mix_conv','coef_mix_turb','coef_wind_stir','coef_mix_shear','wind_factor','ce','ch','cd','Kw','coef_inf_entrain','strm_hf_angle','strm_hf_angle','strm_hf_angle','strmbd_slope','strmbd_slope','strmbd_slope','strmbd_drag','strmbd_drag','strmbd_drag']
-params_name = ['coef_mix_KH','coef_mix_hyp','coef_mix_conv','coef_mix_turb','coef_wind_stir','coef_mix_shear']
+params_name = ['coef_mix_KH','coef_mix_hyp','coef_mix_conv','coef_mix_turb','coef_wind_stir','coef_mix_shear','Kw','ce','ch','cd']
 # In glm3.nml file some of the parameters may have multiple values (i.e. light_extc = 1.0, 0.5, 2.0, 4.0  ! Comma-separated list of light extinction coefficients for each waveband)
 # So, what are the indexes of the decision variables in glm3.nml file (must be a list and order is important!)
 #params_id = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 2, 0, 1, 2]
-params_id = [0, 0, 0, 0, 0, 0]
+params_id = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 #--------------------------------------------------------------------------------------------------------------
 
 # Now check whether the number of params_section, params_name and params_id are equal
